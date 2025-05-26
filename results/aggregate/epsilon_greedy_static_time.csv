@@ -1,0 +1,2 @@
+Strategy,Environment,MeanTime,StdTime
+epsilon_greedy,static,0.039242756366729734,0.07800225828573043
