@@ -2,3 +2,5 @@ decay_epsilon/*
 epsilon_greedy/*
 softmax/*
 .oldstuff/*
+results/*
+results/aggregate/*
