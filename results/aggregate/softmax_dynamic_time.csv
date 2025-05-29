@@ -1,2 +1,2 @@
 Strategy,Environment,MeanTime,StdTime
-softmax,dynamic,0.8685149431228638,0.026677869737902916
+softmax,dynamic,0.565320122718811,0.006529019092726238

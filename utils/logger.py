@@ -3,7 +3,7 @@ import pandas as pd
 import os
 
 def save_to_csv(rewards, steps, successes,
-                strategy_name, env_name,
+                strategy_name, env_name, run_id,
                 folder="results"):
     """
     Saves one run's metrics to CSV.
@@ -15,7 +15,7 @@ def save_to_csv(rewards, steps, successes,
         "Success": successes
     })
     os.makedirs(folder, exist_ok=True)
-    filename = f"{folder}/{strategy_name}_{env_name}_run.csv"
+    filename = f"{folder}/{strategy_name}_{env_name}_run_{run_id}.csv"
     df.to_csv(filename, index=False)
     print(f"Saved individual run: {filename}")
 

@@ -1,2 +1,2 @@
 Strategy,Environment,MeanTime,StdTime
-epsilon_greedy,dynamic,0.23695255517959596,0.005120327791763321
+epsilon_greedy,dynamic,0.16429228925704956,0.003442566986952302

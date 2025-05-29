@@ -5,7 +5,7 @@ import pandas as pd
 import os
 
 def plot_metrics(rewards, steps, successes,
-                 strategy_name, env_name,
+                 strategy_name, env_name, run_id,
                  folder="results"):
     os.makedirs(folder, exist_ok=True)
 
@@ -14,7 +14,7 @@ def plot_metrics(rewards, steps, successes,
     plt.plot(rewards)
     plt.xlabel("Episode"); plt.ylabel("Reward")
     plt.title(f"{strategy_name} on {env_name}: Reward")
-    plt.savefig(f"{folder}/{strategy_name}_{env_name}_reward.png")
+    plt.savefig(f"{folder}/{strategy_name}_{env_name}_run_{run_id}_reward.png")
     plt.close()
 
     # Steps
@@ -22,7 +22,7 @@ def plot_metrics(rewards, steps, successes,
     plt.plot(steps)
     plt.xlabel("Episode"); plt.ylabel("Steps")
     plt.title(f"{strategy_name} on {env_name}: Steps")
-    plt.savefig(f"{folder}/{strategy_name}_{env_name}_steps.png")
+    plt.savefig(f"{folder}/{strategy_name}_{env_name}_run_{run_id}_steps.png")
     plt.close()
 
     # Success rate
@@ -31,7 +31,7 @@ def plot_metrics(rewards, steps, successes,
     plt.plot(rate)
     plt.xlabel("Episode"); plt.ylabel("Success Rate")
     plt.title(f"{strategy_name} on {env_name}: Success Rate")
-    plt.savefig(f"{folder}/{strategy_name}_{env_name}_success.png")
+    plt.savefig(f"{folder}/{strategy_name}_{env_name}_run_{run_id}_success.png")
     plt.close()
 
 def plot_mean_metrics(mean_r, std_r,
@@ -64,9 +64,12 @@ def plot_mean_metrics(mean_r, std_r,
     # Mean ± std success
     plt.figure()
     plt.plot(x, mean_u, label="Mean")
-    plt.fill_between(x, mean_u - std_u, mean_u + std_u, alpha=0.2)
+    lower = np.clip(mean_u - std_u, 0, 1)
+    upper = np.clip(mean_u + std_u, 0, 1)
+    plt.fill_between(x, lower, upper, alpha=0.2)
     plt.xlabel("Episode"); plt.ylabel("Success Rate")
     plt.title(f"{strategy_name} on {env_name}: Success ± STD")
+    plt.ylim(0, 1)
     plt.savefig(f"{folder}/{strategy_name}_{env_name}_success_agg.png")
     plt.close()
 
@@ -84,10 +87,10 @@ def plot_time_runs(times, strategy_name, env_name, folder="results/aggregate", x
 
     plt.figure(figsize=(6, 4))
     # scatter of individual runs
-    plt.scatter(runs, times, label="Run time", zorder=2)
+    plt.scatter(runs, times, label="Run time", zorder=1)
     # horizontal mean line
     plt.hlines(mean_time, xmin=1, xmax=len(times), colors="red",
-               linestyles="dashed", label=f"Mean = {mean_time:.3f}s", zorder=1)
+               linestyles="dashed", label=f"Mean = {mean_time:.3f}s", zorder=2)
     
     
     # Compute tick positions: every x_interval plus the last run

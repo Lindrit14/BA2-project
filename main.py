@@ -23,7 +23,7 @@ from utils.plotting import (
     plot_mean_metrics
 )
 
-def run_training(env, agent, episodes=500, max_steps=300):
+def run_training(env, agent, episodes=500, max_steps=100):
     """
     Runs Q-learning training for one run.
     Returns lists: rewards[i], steps[i], successes[i] for each episode.
@@ -50,7 +50,7 @@ def run_training(env, agent, episodes=500, max_steps=300):
 
 def experiment():
     episodes = 500
-    repetitions = 1000
+    repetitions = 500
     seeds = list(range(repetitions))
 
     strategies = {
@@ -87,21 +87,23 @@ def experiment():
                 start = time.time()
                 r, st, succ = run_training(env, agent, episodes)
                 duration = time.time() - start
-
+                """
                 # save individual-run data
-                #save_to_csv(
-                #    r, st, succ,
-                 #   strat_name,
-                  #  env_name,
-                   # folder="results/individual"
-                #)
-                #plot_metrics(
-                 #   r, st, succ,
-                  #  strat_name,
-                   # env_name,
-                    #folder="results/individual"
-                #)
-
+                save_to_csv(
+                    r, st, succ,
+                   strat_name,
+                   env_name,
+                   run_id=run_idx,
+                   folder="results/individual"
+                )
+                plot_metrics(
+                 r, st, succ,
+                  strat_name,
+                   env_name,
+                   run_id=run_idx,
+                    folder="results/individual"
+                )
+                """
                 # collect for aggregate
                 R[run_idx] = r
                 S[run_idx] = st
